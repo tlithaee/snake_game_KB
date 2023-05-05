@@ -15,7 +15,7 @@ BG = pygame.image.load("assets/background_snake.png")
 start_img = pygame.image.load('assets/start_1.png').convert_alpha()
 
 #create button instances
-start_button = button.Button(180, 270, start_img, 0.8)
+start_button = button.Button(180, 230, start_img, 0.8)
 
 #game loop
 run = True
