@@ -5,27 +5,35 @@ from blessed import Terminal
 
 def run_game():
 
-    class Cube(object): #membuat objek cube pada game.
+    # -------CONFIG--------
+    APPLE = '🍎'
+
+    class Cube(object):
         rows = 20
-        w = 500
-        
-        def __init__(self,start,dirnx=1,dirxny=0,color=(255,0,0), obstacle=False): #constructor 
+        width = 500
+
+        def __init__(self, start, dirnx=1, dirny=0, color=(255, 0, 0), obstacle=False):
             self.pos = start
-            self.dirnx = 1
-            self.dirny = 0
+            self.dirnx = dirnx
+            self.dirny = dirny
             self.color = color
             self.obstacle = obstacle
 
         def draw(self, surface, eyes=False):
-            dis = self.w // self.rows
+            dis = self.width // self.rows
             i = self.pos[0]
             j = self.pos[1]
 
-            if not self.obstacle:
-                apple_image = pygame.image.load("assets/apple.png")
-                apple_image = pygame.transform.scale(apple_image, (dis - 2, dis - 2))
-                surface.blit(apple_image, (i * dis + 1, j * dis + 1))
+            if self.obstacle:
+                pygame.draw.rect(surface, (217, 217, 217), (i * dis + 1, j * dis + 1, dis - 2, dis - 2))
+            else:
+                pygame.draw.rect(surface, self.color, (i * dis + 1, j * dis + 1, dis - 2, dis - 2))
 
+            if not self.obstacle:
+                apple_font = pygame.font.Font(None, dis)  # Menggunakan font default pygame
+                apple_text = apple_font.render(APPLE, True, (255, 0, 0))  # Menggambar teks apel dengan warna merah
+                surface.blit(apple_text, (i * dis + dis // 2 - apple_text.get_width() // 2, j * dis + dis // 2 - apple_text.get_height() // 2))  # Menampilkan teks apel di posisi yang tepat
+                
                 if eyes:
                     centre = dis // 2
                     radius = 3
@@ -33,24 +41,15 @@ def run_game():
                     circleMiddle2 = (i * dis + dis - radius * 2, j * dis + 8)
                     pygame.draw.circle(surface, (255, 255, 255), circleMiddle, radius)
                     pygame.draw.circle(surface, (255, 255, 255), circleMiddle2, radius)
-            else:
-                pygame.draw.rect(surface, self.color, (i * dis + 1, j * dis + 1, dis - 2, dis - 2))
 
     def drawGrid(surface, rows, width, obstacles):
         sizeBtwn = width // rows
+        for l in range(rows):
+            x = l * sizeBtwn
+            y = l * sizeBtwn
 
         for obstacle in obstacles:
-            if not obstacle.obstacle:
-                obstacle.draw(surface)
-
-        for obstacle in obstacles:
-            if obstacle.obstacle:
-                obstacle.draw(surface)
-
-    def redrawWindow(surface, width, rows):
-        surface.fill((0,0,0))
-        drawGrid(width, rows, surface)
-
+            obstacle.draw(surface)
 
     def main():
         pygame.init()
@@ -60,20 +59,20 @@ def run_game():
         clock = pygame.time.Clock()  # objek clock untuk mengontrol framerate
 
         obstacles = [
-            Cube((4, 5), color=(217, 217, 217), obstacle=True),
-            Cube((4, 6), color=(217, 217, 217), obstacle=True),
-            Cube((4, 7), color=(217, 217, 217), obstacle=True),
-            Cube((10, 15), color=(217, 217, 217), obstacle=True),
-            Cube((11, 15), color=(217, 217, 217), obstacle=True),
-            Cube((12, 15), color=(217, 217, 217), obstacle=True),
-            Cube((13, 15), color=(217, 217, 217), obstacle=True),
-            Cube((14, 15), color=(217, 217, 217), obstacle=True),
-            Cube((15, 15), color=(217, 217, 217), obstacle=True),
-            Cube((15, 14), color=(217, 217, 217), obstacle=True),
-            Cube((15, 13), color=(217, 217, 217), obstacle=True),
-            Cube((15, 12), color=(217, 217, 217), obstacle=True),
-            Cube((15, 11), color=(217, 217, 217), obstacle=True),
-            Cube((15, 10), color=(217, 217, 217), obstacle=True)
+            Cube((4, 5), color=(0, 0, 255), obstacle=True),
+            Cube((4, 6), color=(0, 0, 255), obstacle=True),
+            Cube((4, 7), color=(0, 0, 255), obstacle=True),
+            Cube((10, 15), color=(0, 0, 255), obstacle=True),
+            Cube((11, 15), color=(0, 0, 255), obstacle=True),
+            Cube((12, 15), color=(0, 0, 255), obstacle=True),
+            Cube((13, 15), color=(0, 0, 255), obstacle=True),
+            Cube((14, 15), color=(0, 0, 255), obstacle=True),
+            Cube((15, 15), color=(0, 0, 255), obstacle=True),
+            Cube((15, 14), color=(0, 0, 255), obstacle=True),
+            Cube((15, 13), color=(0, 0, 255), obstacle=True),
+            Cube((15, 12), color=(0, 0, 255), obstacle=True),
+            Cube((15, 11), color=(0, 0, 255), obstacle=True),
+            Cube((15, 10), color=(0, 0, 255), obstacle=True)
         ]
 
         def generate_apple(obstacles):
