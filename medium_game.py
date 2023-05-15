@@ -528,7 +528,27 @@ def run_game():
                 starty = random.randint(0, rows-1)
                 s.reset((startx,starty))
 
+            elif (x - 1, y) == new_pos:
+                visited = set({})
+                redrawWindow(score, obstacles, lose = True)
+                print('Score: ', len(s.body)-1)
+                showGameOverScreen()
+                score = 0
+                startx = random.randint(0, rows-1)
+                starty = random.randint(0, rows-1)
+                s.reset((startx,starty))
+
             elif (x, y + 1) == new_pos:
+                visited = set({})
+                redrawWindow(score, obstacles, lose = True)
+                print('Score: ', len(s.body)-1)
+                showGameOverScreen()
+                score = 0
+                startx = random.randint(0, rows-1)
+                starty = random.randint(0, rows-1)
+                s.reset((startx,starty))
+            
+            elif (x, y - 1) == new_pos:
                 visited = set({})
                 redrawWindow(score, obstacles, lose = True)
                 print('Score: ', len(s.body)-1)
@@ -548,7 +568,27 @@ def run_game():
                 starty = random.randint(0, rows-1)
                 s.reset((startx,starty))
 
+            elif (xx - 1, yy) == new_pos:
+                visited = set({})
+                redrawWindow(score, obstacles, lose = True)
+                print('Score: ', len(s.body)-1)
+                showGameOverScreen()
+                score = 0
+                startx = random.randint(0, rows-1)
+                starty = random.randint(0, rows-1)
+                s.reset((startx,starty))
+
             elif (xx, yy + 1) == new_pos:
+                visited = set({})
+                redrawWindow(score, obstacles, lose = True)
+                print('Score: ', len(s.body)-1)
+                showGameOverScreen()
+                score = 0
+                startx = random.randint(0, rows-1)
+                starty = random.randint(0, rows-1)
+                s.reset((startx,starty))
+
+            elif (xx, yy - 1) == new_pos:
                 visited = set({})
                 redrawWindow(score, obstacles, lose = True)
                 print('Score: ', len(s.body)-1)
@@ -581,8 +621,56 @@ def run_game():
                         starty = random.randint(0, rows-1)
 
                 s.reset((startx,starty))
+            
+            if (x - 1, y) in obs_pos:
+                score += 1;
+                startx = random.randint(0, rows-1)
+                starty = random.randint(0, rows-1)
+                redrawWindow(score, obstacles)
+
+                for posisi in obs_pos:
+                    x, y = posisi
+
+                    if startx == x and starty == y:
+                        startx = random.randint(0, rows-1)
+                        starty = random.randint(0, rows-1)
+                    if startx-1 == x and starty-1 == y:
+                        startx = random.randint(0, rows-1)
+                        starty = random.randint(0, rows-1)
+                    if startx-2 == x and starty-2 == y:
+                        startx = random.randint(0, rows-1)
+                        starty = random.randint(0, rows-1)
+                    if startx-3 == x and starty-3 == y:
+                        startx = random.randint(0, rows-1)
+                        starty = random.randint(0, rows-1)
+
+                s.reset((startx,starty))
                 
             if (x, y + 1) in obs_pos:
+                score += 1;
+                startx = random.randint(0, rows-1)
+                starty = random.randint(0, rows-1)
+                redrawWindow(score, obstacles)
+
+                for posisi in obs_pos:
+                    x, y = posisi
+
+                    if startx == x and starty == y:
+                        startx = random.randint(0, rows-1)
+                        starty = random.randint(0, rows-1)
+                    if startx-1 == x and starty-1 == y:
+                        startx = random.randint(0, rows-1)
+                        starty = random.randint(0, rows-1)
+                    if startx-2 == x and starty-2 == y:
+                        startx = random.randint(0, rows-1)
+                        starty = random.randint(0, rows-1)
+                    if startx-3 == x and starty-3 == y:
+                        startx = random.randint(0, rows-1)
+                        starty = random.randint(0, rows-1)
+
+                s.reset((startx,starty))
+            
+            if (x, y - 1) in obs_pos:
                 score += 1;
                 startx = random.randint(0, rows-1)
                 starty = random.randint(0, rows-1)

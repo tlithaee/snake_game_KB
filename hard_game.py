@@ -451,43 +451,23 @@ def run_game():
         clock = pygame.time.Clock()
         visited = set({})
 
-        obstacles = [cube((i, 0), color=(217, 217, 217), obstacle=True) for i in range(rows)] 
-        obstacles.extend([cube((i, rows - 1), color=(217, 217, 217), obstacle=True) for i in range(rows)])  # Batas bawah
-        obstacles.extend([
+        obstacles = [
+            cube((4, 5), color=(217, 217, 217), obstacle=True),
             cube((4, 6), color=(217, 217, 217), obstacle=True),
-            cube((5, 6), color=(217, 217, 217), obstacle=True),
-            cube((6, 6), color=(217, 217, 217), obstacle=True),
-            cube((7, 6), color=(217, 217, 217), obstacle=True),
-            cube((8, 6), color=(217, 217, 217), obstacle=True),
-            cube((9, 6), color=(217, 217, 217), obstacle=True),
-            cube((10, 6), color=(217, 217, 217), obstacle=True),
-            cube((10, 7), color=(217, 217, 217), obstacle=True),
-            cube((10, 8), color=(217, 217, 217), obstacle=True),
-            cube((10, 9), color=(217, 217, 217), obstacle=True),
-            cube((10, 10), color=(217, 217, 217), obstacle=True),
-            cube((11, 10), color=(217, 217, 217), obstacle=True),
-            cube((12, 10), color=(217, 217, 217), obstacle=True),
-            cube((13, 10), color=(217, 217, 217), obstacle=True),
-            cube((14, 10), color=(217, 217, 217), obstacle=True),
-            cube((5, 14), color=(217, 217, 217), obstacle=True),
-            cube((6, 14), color=(217, 217, 217), obstacle=True),
-            cube((7, 14), color=(217, 217, 217), obstacle=True),
-            cube((13, 14), color=(217, 217, 217), obstacle=True),
-            cube((11, 14), color=(217, 217, 217), obstacle=True),
-            cube((12, 14), color=(217, 217, 217), obstacle=True)
-        ])  # Posisi obstacle pada batas-batas board
+            cube((4, 7), color=(217, 217, 217), obstacle=True),
+            cube((15, 14), color=(217, 217, 217), obstacle=True),
+            cube((15, 13), color=(217, 217, 217), obstacle=True),
+            cube((10, 12), color=(217, 217, 217), obstacle=True),
+            cube((10, 11), color=(217, 217, 217), obstacle=True),
+            cube((10, 10), color=(217, 217, 217), obstacle=True)
+        ]
 
-        obs_pos = [ (1, 0),(2, 0), (3, 0), (4, 0), (5, 0), (6, 0), (7, 0), (8, 0), (9, 0), (10, 0), (11, 0), (12, 0), (13, 0), (14, 0), (15, 0), 
-                   (16, 0), (17, 0), (18, 0), (19, 0), (0, 19), (1, 19), (2, 19),(3, 19), (4, 19), (5, 19), (6, 19), (7, 19), (8, 19), (9, 19), (10, 19),  (11, 19), (12, 19), (13, 19), (14, 19), (15, 19), 
-                   (16, 19), (17, 19), (18, 19), (19, 19), (4, 6), (5, 6), (6, 6), (7, 6), (8, 6), (9, 6), (10, 6), (10, 7), (10, 8), (10, 9),    
-                   (10, 10), (11, 10), (12, 10), (13, 10), (14, 10), (5, 14), (6, 14), (7, 14), (13, 14), (11, 14), (12, 14)
-                ]
+        obs_pos = [(4, 5), (4, 6), (4, 7), (15, 14), (15, 13), (10, 12), (10, 11), (10, 10)]
 
         apple = generate_apple(obstacles)
         apple.dirnx = 0
         apple.dirny = 0
-        score = 0
-
+        score = 0;
         while flag:
             pygame.time.delay(50)
             clock.tick(10)
@@ -528,6 +508,7 @@ def run_game():
                     apple.pos = new_pos
 
             best_first_search(new_pos)
+
             x, y = s.body[0].pos
             xx, yy = s.body[1].pos
 
@@ -541,7 +522,27 @@ def run_game():
                 starty = random.randint(0, rows-1)
                 s.reset((startx,starty))
 
+            elif (x - 1, y) == new_pos:
+                visited = set({})
+                redrawWindow(score, obstacles, lose = True)
+                print('Score: ', len(s.body)-1)
+                showGameOverScreen()
+                score = 0
+                startx = random.randint(0, rows-1)
+                starty = random.randint(0, rows-1)
+                s.reset((startx,starty))
+
             elif (x, y + 1) == new_pos:
+                visited = set({})
+                redrawWindow(score, obstacles, lose = True)
+                print('Score: ', len(s.body)-1)
+                showGameOverScreen()
+                score = 0
+                startx = random.randint(0, rows-1)
+                starty = random.randint(0, rows-1)
+                s.reset((startx,starty))
+            
+            elif (x, y - 1) == new_pos:
                 visited = set({})
                 redrawWindow(score, obstacles, lose = True)
                 print('Score: ', len(s.body)-1)
@@ -561,7 +562,27 @@ def run_game():
                 starty = random.randint(0, rows-1)
                 s.reset((startx,starty))
 
+            elif (xx - 1, yy) == new_pos:
+                visited = set({})
+                redrawWindow(score, obstacles, lose = True)
+                print('Score: ', len(s.body)-1)
+                showGameOverScreen()
+                score = 0
+                startx = random.randint(0, rows-1)
+                starty = random.randint(0, rows-1)
+                s.reset((startx,starty))
+
             elif (xx, yy + 1) == new_pos:
+                visited = set({})
+                redrawWindow(score, obstacles, lose = True)
+                print('Score: ', len(s.body)-1)
+                showGameOverScreen()
+                score = 0
+                startx = random.randint(0, rows-1)
+                starty = random.randint(0, rows-1)
+                s.reset((startx,starty))
+
+            elif (xx, yy - 1) == new_pos:
                 visited = set({})
                 redrawWindow(score, obstacles, lose = True)
                 print('Score: ', len(s.body)-1)
@@ -573,9 +594,9 @@ def run_game():
 
             if (x + 1, y) in obs_pos:
                 score += 1;
-                redrawWindow(score, obstacles)
                 startx = random.randint(0, rows-1)
                 starty = random.randint(0, rows-1)
+                redrawWindow(score, obstacles)
 
                 for posisi in obs_pos:
                     x, y = posisi
@@ -594,12 +615,36 @@ def run_game():
                         starty = random.randint(0, rows-1)
 
                 s.reset((startx,starty))
+            
+            if (x - 1, y) in obs_pos:
+                score += 1;
+                startx = random.randint(0, rows-1)
+                starty = random.randint(0, rows-1)
+                redrawWindow(score, obstacles)
 
+                for posisi in obs_pos:
+                    x, y = posisi
+
+                    if startx == x and starty == y:
+                        startx = random.randint(0, rows-1)
+                        starty = random.randint(0, rows-1)
+                    if startx-1 == x and starty-1 == y:
+                        startx = random.randint(0, rows-1)
+                        starty = random.randint(0, rows-1)
+                    if startx-2 == x and starty-2 == y:
+                        startx = random.randint(0, rows-1)
+                        starty = random.randint(0, rows-1)
+                    if startx-3 == x and starty-3 == y:
+                        startx = random.randint(0, rows-1)
+                        starty = random.randint(0, rows-1)
+
+                s.reset((startx,starty))
+                
             if (x, y + 1) in obs_pos:
                 score += 1;
-                redrawWindow(score, obstacles)
                 startx = random.randint(0, rows-1)
                 starty = random.randint(0, rows-1)
+                redrawWindow(score, obstacles)
 
                 for posisi in obs_pos:
                     x, y = posisi
@@ -618,6 +663,31 @@ def run_game():
                         starty = random.randint(0, rows-1)
 
                 s.reset((startx,starty))
+            
+            if (x, y - 1) in obs_pos:
+                score += 1;
+                startx = random.randint(0, rows-1)
+                starty = random.randint(0, rows-1)
+                redrawWindow(score, obstacles)
+
+                for posisi in obs_pos:
+                    x, y = posisi
+
+                    if startx == x and starty == y:
+                        startx = random.randint(0, rows-1)
+                        starty = random.randint(0, rows-1)
+                    if startx-1 == x and starty-1 == y:
+                        startx = random.randint(0, rows-1)
+                        starty = random.randint(0, rows-1)
+                    if startx-2 == x and starty-2 == y:
+                        startx = random.randint(0, rows-1)
+                        starty = random.randint(0, rows-1)
+                    if startx-3 == x and starty-3 == y:
+                        startx = random.randint(0, rows-1)
+                        starty = random.randint(0, rows-1)
+
+                s.reset((startx,starty))
+                
             redrawWindow(score, obstacles)
 
     main()
