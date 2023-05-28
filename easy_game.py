@@ -576,7 +576,7 @@ def run_game():
         score = 0;
         while flag:
             pygame.time.delay(50)
-            clock.tick(10)
+            clock.tick(8)
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
